@@ -1,14 +1,16 @@
 {
   "packageManager": "npm@11.3.0+sha512.96eb611483f49c55f7fa74df61b588de9e213f80a256728e6798ddc67176c7b07e4a1cfc7de8922422cbce02543714367037536955221fa451b0c4fefaf20c66",
   "dependencies": {
+    "@biomejs/biome": "^1.9.4",
     "@tailwindcss/cli": "^4.1.5",
     "@types/emscripten": "^1.40.1",
+    "codemirror": "^6.0.1",
     "esbuild": "^0.25.3",
     "typescript": "^5.8.3",
     "web-tree-sitter": "^0.25.3"
   },
   "scripts": {
-    "prepare": "cp ./node_modules/web-tree-sitter/lib/tree-sitter.wasm ./web/",
+    "prepare": "cp ./node_modules/web-tree-sitter/tree-sitter.wasm ./web/",
     "build:js": "tsc",
     "build:css": "tailwindcss -i ./src/index.css -o ./web/index.css",
     "bundle": "esbuild --bundle --minify --external:fs --external:path ./out/main.js --outfile=./web/main.js"
