@@ -1,2 +1,10 @@
 {
+  "compilerOptions": {
+    "outDir": "./out/",
+    "target": "esnext",
+    "module": "nodenext",
+    "types": [
+      "@types/emscripten"
+    ]
+  }
 }
