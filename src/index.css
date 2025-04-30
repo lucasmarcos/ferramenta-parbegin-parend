@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+.cm-editor {
+  height: 100%;
+}
