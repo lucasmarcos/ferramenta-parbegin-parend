@@ -10,6 +10,6 @@
     "prepare": "cp ./node_modules/web-tree-sitter/lib/tree-sitter.wasm ./web/",
     "build:js": "tsc",
     "build:css": "tailwindcss -i ./src/index.css -o ./web/index.css",
-    "bundle": "esbuild --bundle"
+    "bundle": "esbuild --bundle ./out/main.js --outfile=./web/main.js"
   }
 }
