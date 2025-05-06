@@ -8,13 +8,12 @@ import { interpret } from "./interpret.js";
 import { parse } from "./ir.js";
 import { stackify } from "./stack.js";
 
+cytoscape.use(dagre);
+
 const editorView: HTMLElement = document.getElementById("editor");
 const treeContainer: HTMLElement = document.getElementById("treeContainer");
 
-cytoscape.use(dagre);
-
-let editor;
-
+let editor: EditorView;
 let parser: Parser;
 let ParBeginParEnd: Language;
 

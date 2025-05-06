@@ -2,7 +2,7 @@ export const stackify = (ir) => {
 	const stack = [];
 	let current = [];
 
-  for (let i = 0; i < ir.length; i++) {
+	for (let i = 0; i < ir.length; i++) {
 		if (ir[i] === "[") {
 			const node = { type: "seq", child: current };
 			stack.push(node);
@@ -21,5 +21,5 @@ export const stackify = (ir) => {
 		}
 	}
 
-  return stack;
+	return stack;
 };
