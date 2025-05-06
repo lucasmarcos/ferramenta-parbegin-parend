@@ -49,6 +49,7 @@ const update = EditorView.updateListener.of((update) => {
 });
 
 const share = decodeURI(document.location.hash.substring(1));
+const code = share ? share : example;
 
 (async () => {
 	await Parser.init();
@@ -58,7 +59,7 @@ const share = decodeURI(document.location.hash.substring(1));
 	editor = new EditorView({
 		extensions: [basicSetup, update],
 		parent: editorView,
-		doc: share ? share : example,
+		doc: code,
 	});
-	go(editor.state.doc);
+	go(code);
 })();
