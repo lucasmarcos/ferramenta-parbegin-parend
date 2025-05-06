@@ -21,5 +21,5 @@ export const stackify = (ir) => {
 		}
 	}
 
-	return stack;
+	return current[0];
 };
