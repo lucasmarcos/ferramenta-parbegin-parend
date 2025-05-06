@@ -13,6 +13,8 @@
     "prepare": "cp ./node_modules/web-tree-sitter/tree-sitter.wasm ./web/",
     "build:js": "tsc",
     "build:css": "tailwindcss -i ./src/index.css -o ./web/index.css",
-    "bundle": "esbuild --bundle --minify --external:fs --external:path ./out/main.js --outfile=./web/main.js"
+    "bundle": "esbuild --bundle --minify --external:fs --external:path ./out/main.js --outfile=./web/main.js",
+    "watch:js": "tsc --watch",
+    "watch:bundle": "esbuild --watch --bundle --external:fs --external:path ./out/main.js --outfile=./web/main.js"
   }
 }
