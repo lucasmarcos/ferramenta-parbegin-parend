@@ -60,5 +60,5 @@ const share = decodeURI(document.location.hash.substring(1));
 		parent: editorView,
 		doc: share ? share : example,
 	});
-	go(example);
+	go(editor.state.doc);
 })();
