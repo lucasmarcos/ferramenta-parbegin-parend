@@ -43,9 +43,12 @@ const go = (doc) => {
 const update = EditorView.updateListener.of((update) => {
 	if (update.docChanged) {
 		const doc = update.state.doc.toString();
+		document.location.hash = encodeURI(doc);
 		go(doc);
 	}
 });
+
+const share = decodeURI(document.location.hash.substring(1));
 
 (async () => {
 	await Parser.init();
@@ -55,7 +58,7 @@ const update = EditorView.updateListener.of((update) => {
 	editor = new EditorView({
 		extensions: [basicSetup, update],
 		parent: editorView,
-		doc: example,
+		doc: share ? share : example,
 	});
 	go(example);
 })();
