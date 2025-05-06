@@ -1,15 +1,48 @@
-export const interpret = (node) => {
-	const calls = [];
+export const interpret = (stack) => {
+	const elements = [];
 
-	if (node.label) {
-		calls.push({ data: { id: node.id, label: node.label } });
-	}
+	const process = (node, dependsOn = []) => {
+		if (!node) return [];
 
-	if (node.child) {
-		for (const c of node.child) {
-			calls.push(...interpret(c));
+		switch (node.type) {
+			case "call":
+				elements.push({ data: { id: node.id, label: node.label } });
+
+				dependsOn.forEach((source) => {
+					elements.push({ data: { source: source.id, target: node.id } });
+				});
+
+				return [node];
+
+			case "seq":
+				let currentDeps = [...dependsOn];
+
+				if (Array.isArray(node.child)) {
+					node.child.forEach((childNode) => {
+						currentDeps = process(childNode, currentDeps);
+					});
+				}
+
+				return currentDeps;
+
+			case "par":
+				let allOutputs = [];
+
+				if (Array.isArray(node.child)) {
+					node.child.forEach((branch) => {
+						const branchOutputs = process(branch, dependsOn);
+						allOutputs = [...allOutputs, ...branchOutputs];
+					});
+				}
+
+				return allOutputs;
+
+			default:
+				return dependsOn;
 		}
-	}
+	};
 
-	return calls;
+	process(stack);
+
+	return elements;
 };
