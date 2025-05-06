@@ -17,7 +17,7 @@ export const stackify = (ir) => {
 			current = last.child;
 			current.push(node);
 		} else {
-			current.push({ type: "call", label: ir[i] });
+			current.push({ type: "call", id: crypto.randomUUID(), label: ir[i] });
 		}
 	}
 
