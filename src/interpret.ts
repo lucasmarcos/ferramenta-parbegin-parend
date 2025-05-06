@@ -1,3 +1,5 @@
+/*
+
 const findFirstLabel = (node) => {
 	if (node.type === "call") {
 		return node.label;
@@ -40,3 +42,5 @@ export const interpret = (node, last, parentNext = null) => {
 		return node.label;
 	}
 };
+
+*/
