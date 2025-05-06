@@ -4,7 +4,7 @@ import cytoscape from "cytoscape";
 import dagre from "cytoscape-dagre";
 import { Language, Parser } from "web-tree-sitter";
 import { example } from "./example.js";
-import { interpret } from "./interpret.js";
+import { interpret } from "./interpret2.js";
 import { parse } from "./ir.js";
 import { stackify } from "./stack.js";
 
@@ -17,29 +17,15 @@ let editor: EditorView;
 let parser: Parser;
 let ParBeginParEnd: Language;
 
-(async () => {
-	await Parser.init();
-	parser = new Parser();
-	ParBeginParEnd = await Language.load("tree-sitter-parbeginparend.wasm");
-	parser.setLanguage(ParBeginParEnd);
-	editor = new EditorView({
-		extensions: [basicSetup],
-		parent: editorView,
-		doc: example,
-	});
-
-	const tree = parser.parse(example);
+const go = (doc) => {
+	const tree = parser.parse(doc);
 	const ir = parse(tree);
-	const current = stackify(ir);
-	const graph = interpret(current, undefined, undefined);
+	const stack = stackify(ir);
+	const graph = interpret(stack);
 
 	cytoscape({
 		container: treeContainer,
-		elements: [
-			{ data: { id: "A" } },
-			{ data: { id: "B" } },
-			{ data: { source: "A", target: "B" } },
-		],
+		elements: graph,
 		layout: {
 			name: "dagre",
 		},
@@ -52,4 +38,24 @@ let ParBeginParEnd: Language;
 			},
 		],
 	});
+};
+
+const update = EditorView.updateListener.of((update) => {
+	if (update.docChanged) {
+		const doc = update.state.doc.toString();
+		go(doc);
+	}
+});
+
+(async () => {
+	await Parser.init();
+	parser = new Parser();
+	ParBeginParEnd = await Language.load("tree-sitter-parbeginparend.wasm");
+	parser.setLanguage(ParBeginParEnd);
+	editor = new EditorView({
+		extensions: [basicSetup, update],
+		parent: editorView,
+		doc: example,
+	});
+	go(example);
 })();
