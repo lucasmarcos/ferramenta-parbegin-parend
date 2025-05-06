@@ -2,7 +2,7 @@ export const interpret = (node) => {
 	const calls = [];
 
 	if (node.label) {
-		calls.push({ data: { id: node.label } });
+		calls.push({ data: { id: node.id, label: node.label } });
 	}
 
 	if (node.child) {

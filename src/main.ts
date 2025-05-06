@@ -33,7 +33,7 @@ const go = (doc) => {
 			{
 				selector: "node",
 				css: {
-					label: "data(id)",
+					label: "data(label)",
 				},
 			},
 		],
