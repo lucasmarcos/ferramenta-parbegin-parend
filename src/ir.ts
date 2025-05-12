@@ -1,17 +1,16 @@
-export const parse = (tree) => {
+export const parse = (doc, tree) => {
 	const q = [];
 	const ir = [];
 
-	for (let i = 0; i < tree.rootNode.childCount; i++) {
-		const type = tree.rootNode.child(i).type;
-
-		switch (type) {
-			case "begin": {
+	const cursor = tree.cursor();
+	do {
+		switch (cursor.name) {
+			case "Begin": {
 				q.push("begin");
 				ir.push("[");
 				break;
 			}
-			case "end": {
+			case "End": {
 				const last = q.pop();
 				if (last !== "begin") {
 					console.log("error");
@@ -19,12 +18,12 @@ export const parse = (tree) => {
 				ir.push("]");
 				break;
 			}
-			case "parbegin": {
+			case "ParBegin": {
 				q.push("parbegin");
 				ir.push("(");
 				break;
 			}
-			case "parend": {
+			case "ParEnd": {
 				const last = q.pop();
 				if (last !== "parbegin") {
 					console.log("error");
@@ -32,12 +31,13 @@ export const parse = (tree) => {
 				ir.push(")");
 				break;
 			}
-			case "call": {
-				ir.push(tree.rootNode.child(i).child(0).text);
+			case "Call": {
+				cursor.firstChild();
+				ir.push(doc.substr(cursor.from, cursor.to - cursor.from));
 				break;
 			}
 		}
-	}
+	} while (cursor.next());
 
 	return ir;
 };
