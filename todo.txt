@@ -1,0 +1,4 @@
+- erros
+- testes
+- realce de sintaxe
+- exportar para graphviz .dot
