@@ -1,0 +1,15 @@
+BEGIN
+  P1;
+  PARBEGIN
+    P3;
+    BEGIN
+      P2;
+      P4;
+      PARBEGIN
+        P5;
+        P6;
+      PAREND
+    END
+  PAREND
+  P7;
+END
