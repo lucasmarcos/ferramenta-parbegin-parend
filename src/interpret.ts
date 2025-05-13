@@ -1,51 +1,51 @@
 export const interpret = (stack) => {
-	const elements = [];
+  const elements = [];
 
-	const process = (node, dependsOn = []) => {
-		if (!node) return [];
+  const process = (node, dependsOn = []) => {
+    if (!node) return [];
 
-		switch (node.type) {
-			case "call":
-				elements.push({ data: { id: node.id, label: node.label } });
+    switch (node.type) {
+      case "call":
+        elements.push({ data: { id: node.id, label: node.label } });
 
-				for (const source of dependsOn) {
-					elements.push({ data: { source: source.id, target: node.id } });
-				}
+        for (const source of dependsOn) {
+          elements.push({ data: { source: source.id, target: node.id } });
+        }
 
-				return [node];
+        return [node];
 
-			case "seq": {
-				let currentDeps = [...dependsOn];
+      case "seq": {
+        let currentDeps = [...dependsOn];
 
-				if (Array.isArray(node.child)) {
-					for (const childNode of node.child) {
-						currentDeps = process(childNode, currentDeps);
-					}
-				}
+        if (Array.isArray(node.child)) {
+          for (const childNode of node.child) {
+            currentDeps = process(childNode, currentDeps);
+          }
+        }
 
-				return currentDeps;
-			}
+        return currentDeps;
+      }
 
-			case "par": {
-				let allOutputs = [];
+      case "par": {
+        let allOutputs = [];
 
-				if (Array.isArray(node.child)) {
-					for (const branch of node.child) {
-						const branchOutputs = process(branch, dependsOn);
-						allOutputs = [...allOutputs, ...branchOutputs];
-					}
-				}
+        if (Array.isArray(node.child)) {
+          for (const branch of node.child) {
+            const branchOutputs = process(branch, dependsOn);
+            allOutputs = [...allOutputs, ...branchOutputs];
+          }
+        }
 
-				return allOutputs;
-			}
+        return allOutputs;
+      }
 
-			default: {
-				return dependsOn;
-			}
-		}
-	};
+      default: {
+        return dependsOn;
+      }
+    }
+  };
 
-	process(stack);
+  process(stack);
 
-	return elements;
+  return elements;
 };

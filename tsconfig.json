@@ -1,7 +1,7 @@
 {
-	"compilerOptions": {
-		"outDir": "./out/",
-		"target": "esnext",
-		"module": "nodenext"
+  "compilerOptions": {
+    "outDir": "./out/",
+    "target": "esnext",
+    "module": "nodenext"
   }
 }
