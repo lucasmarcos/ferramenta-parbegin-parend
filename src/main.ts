@@ -2,18 +2,16 @@ import { EditorView } from "@codemirror/view";
 import { basicSetup } from "codemirror";
 import cytoscape from "cytoscape";
 import dagre from "cytoscape-dagre";
-import { example } from "./example.js";
-import { interpret } from "./interpret2.js";
-import { parse } from "./ir.js";
 import { parser } from "../out/parser.js";
+import { example } from "./example.js";
+import { interpret } from "./interpret.js";
+import { parse } from "./ir.js";
 import { stackify } from "./stack.js";
 
 cytoscape.use(dagre);
 
 const editorView: HTMLElement = document.getElementById("editor");
 const treeContainer: HTMLElement = document.getElementById("treeContainer");
-
-let editor: EditorView;
 
 const go = (doc) => {
 	const tree = parser.parse(doc);
@@ -47,10 +45,10 @@ const update = EditorView.updateListener.of((update) => {
 const share = decodeURI(document.location.hash.substring(1));
 const code = share ? share : example;
 
-editor = new EditorView({
-  extensions: [basicSetup, update],
-  parent: editorView,
-  doc: code,
+new EditorView({
+	extensions: [basicSetup, update],
+	parent: editorView,
+	doc: code,
 });
 
 go(code);
