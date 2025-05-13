@@ -26,8 +26,27 @@ const go = (doc) => {
     style: [
       {
         selector: "node",
-        css: {
+        style: {
           label: "data(label)",
+          "background-color": "white",
+          "border-width": 1,
+        },
+      },
+      {
+        selector: "edge",
+        style: {
+          "curve-style": "straight",
+          "target-arrow-shape": "triangle",
+          "target-arrow-color": "black",
+          "line-color": "black",
+          width: 1,
+        },
+      },
+      {
+        selector: "label",
+        style: {
+          "text-halign": "center",
+          "text-valign": "center",
         },
       },
     ],
